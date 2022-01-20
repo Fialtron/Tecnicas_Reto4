@@ -1,5 +1,6 @@
 package com.company;
 
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.*;
 
@@ -20,7 +21,7 @@ public class Menu {
 
     private void menu() {
         while (!exit) {
-            System.out.print(" \n Menu \n 1. Registrar vehículos \n " +
+            System.out.print("\nMenu \n 1. Registrar vehículos \n " +
                     "2. Registrar Alquileres \n " +
                     "3. Registrar Seguros \n " +
                     "4. Verificar duración de un alquiler en horas \n " +
@@ -75,7 +76,7 @@ public class Menu {
                         System.out.print("Opcion no valida!\n\n");
                 }
             } catch (NumberFormatException ex) {
-                System.out.println("Inserte un numero valido. Por favor intente nuevamente\n\n");
+                System.out.println("Inserte un numero valido. Por favor intente nuevamente\n");
             }
         }
     }
@@ -85,7 +86,14 @@ public class Menu {
             case 1:
                 System.out.print("Ingrese el numero de vehiculos que desea ingresar: ");
                 try {
-                    nRegistros = sc.nextInt();
+                    String number = sc.next();
+                    while (!validate(number)) {
+                        System.out.println("Por favor ingrese un numero valido");
+                        System.out.print("Ingrese el numero de vehiculos que desea ingresar: ");
+                        number = sc.next();
+                    }
+                    nRegistros = Integer.parseInt(number);
+
                     if (nRegistros > 0) {
 
                         for (int i = 0; i < nRegistros; i++) {
@@ -98,33 +106,33 @@ public class Menu {
                             float alquilerHora;
 
                             try {
-                                System.out.print(" \n Ingrese el identificador del vehiculo (numero sin puntos): ");
-                                id = sc.nextInt();
+                                System.out.print(" \nIngrese el identificador del vehiculo (numero sin puntos): ");
+                                id = Integer.parseInt(sc.next());
 
                                 System.out.print("Ingrese la placa del vehiculo: ");
-                                placa = System.console().readLine();
+                                placa = sc.next();
 
-                                System.out.print("Ingrese el modelo del vehiculo: ");
-                                modelo = System.console().readLine();
+                                System.out.print("Ingrese el nombre del modelo del vehiculo: ");
+                                modelo = sc.next();
 
                                 System.out.print("Ingrese el tipo de vehiculo: ");
-                                tipo = System.console().readLine();
+                                tipo = sc.next();
 
-                                System.out.print("Ingrese el alquiler por hora del vehiculo: ");
-                                alquilerHora = sc.nextFloat();
+                                System.out.print("Ingrese el precio de alquiler por hora del vehiculo: ");
+                                alquilerHora = Float.parseFloat(sc.next());
 
                                 System.out.print("Ingrese la fecha del modelo con el siguiente formato aaaa-mm-dd: ");
-                                fechaModelo = System.console().readLine();
+                                fechaModelo = sc.next();
 
                                 vehiculos.add(new Vehiculo(id, placa, modelo, tipo, LocalDate.parse(fechaModelo),
                                         alquilerHora));
+                                System.out.print(" \nVehiculos ingresados exitosamente ");
 
-                            } catch (Exception e) {
+                            } catch (InputMismatchException e) {
                                 System.out.println(
-                                        "\n Ha ingresado incorrectamente la informacion. Por favor intente nuevamente\n\n");
+                                        "\n No ha ingresado la informacion correctamente. Por favor intente nuevamente\n\n");
                             }
                         }
-                        System.out.print(" \n Vehiculos ingresados exitosamente ");
                     } else {
                         System.out.println("Inserte un numero mayor a 0. Por favor intente nuevamente\n\n");
                     }
@@ -348,4 +356,7 @@ public class Menu {
         }
     }
 
+    private boolean validate(String input) {
+        return input.matches("[0-9]{1,13}(\\.[0-9]*)?");
+    }
 }
