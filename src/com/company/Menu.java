@@ -74,7 +74,7 @@ public class Menu {
                         System.out.print("Opcion no valida!\n\n");
                 }
             } catch (NumberFormatException ex) {
-                System.out.println("Inserte un numero valido. Por favor intente nuevamente\n");
+                System.out.println("Inserte un numero valido. Por favor intente nuevamente");
             }
         }
     }

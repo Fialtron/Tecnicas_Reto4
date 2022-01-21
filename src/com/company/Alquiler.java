@@ -68,15 +68,13 @@ public class Alquiler {
     }
 
     private double calculoValor() {
-        double valorAlquiler = 0;
         double tiempo = ChronoUnit.HOURS.between(inicioAlquiler, finAlquiler);
-        valorAlquiler = tiempo*vehiculo.getAlquilerHora();
+        double valorAlquiler = tiempo * vehiculo.getAlquilerHora();
         return valorAlquiler;
     }
 
     public double duracionAlquiler() {
-        double duracion = ChronoUnit.HOURS.between(inicioAlquiler, finAlquiler);
-        return duracion;
+        return (double) ChronoUnit.HOURS.between(inicioAlquiler, finAlquiler);
     }
 
 }

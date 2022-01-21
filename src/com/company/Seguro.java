@@ -48,8 +48,6 @@ public class Seguro {
     }
 
     public double cobertura(){
-        double diasCobertura = ChronoUnit.DAYS.between(inicioSeguro, finSeguro);   
-        return diasCobertura;
+        return (double) ChronoUnit.DAYS.between(inicioSeguro, finSeguro);
     }
-  
 }
