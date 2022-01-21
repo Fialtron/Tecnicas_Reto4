@@ -1,6 +1,5 @@
 package com.company;
 
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.*;
 
@@ -8,7 +7,6 @@ public class Menu {
 
     boolean exit = false;
     int option;
-    private int nRegistros;
     private List<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
     private List<Alquiler> alquileres = new ArrayList<Alquiler>();
     private List<Seguro> seguros = new ArrayList<Seguro>();
@@ -82,6 +80,7 @@ public class Menu {
     }
 
     private void registro(int opcion) {
+        int nRegistros;
         switch (opcion) {
             case 1:
                 System.out.print("Ingrese el numero de vehiculos que desea ingresar: ");
@@ -146,8 +145,13 @@ public class Menu {
                 System.out.print("Ingrese el numero de alquileres que desea ingresar: ");
 
                 try {
-
-                    nRegistros = sc.nextInt();
+                    String number = sc.next();
+                    while (!validate(number)) {
+                        System.out.println("Por favor ingrese un numero valido");
+                        System.out.print("Ingrese el numero de alquileres que desea ingresar: ");
+                        number = sc.next();
+                    }
+                    nRegistros = Integer.parseInt(number);
 
                     if (nRegistros > 0) {
 
@@ -165,8 +169,8 @@ public class Menu {
 
                             try {
 
-                                System.out.print(" \n Ingrese el identificador del alquiler (numero sin puntos): ");
-                                id = sc.nextInt();
+                                System.out.print(" \nIngrese el identificador del alquiler (numero sin puntos): ");
+                                id = Integer.parseInt(sc.next());
                                 System.out
                                         .print("Seleccione el vehiculo que desea alquilar (por medio del simbolo #): ");
                                 for (int j = 0; j < vehiculos.size(); j++) {
@@ -175,36 +179,33 @@ public class Menu {
                                             + "  \n");
                                 }
 
-                                idVehiculo = sc.nextInt();
+                                idVehiculo = Integer.parseInt(sc.next());
                                 vehiculo = vehiculos.get(idVehiculo);
                                 System.out.print("Ingrese el tipo de documento del alquilador: ");
-                                tipoDocumento = System.console().readLine();
+                                tipoDocumento = sc.next();
                                 System.out.print("Ingrese el documento del alquilador: ");
-                                documento = System.console().readLine();
+                                documento = sc.next();
                                 System.out.print("Ingrese el nombre completo del alquilador: ");
-                                alquilador = System.console().readLine();
+                                alquilador = sc.next();
                                 System.out.print("Ingrese la fecha y hora del inicio del alquiler");
                                 System.out.print(
                                         " \n Utilice el siguiente formato aaaa-mm-ddThh:mm:ss sin olvidar la T: ");
-                                inicioAlquiler = LocalDateTime.parse(System.console().readLine());
+                                inicioAlquiler = LocalDateTime.parse(sc.next());
                                 System.out.print("Ingrese la fecha y hora del final del alquiler");
                                 System.out.print(
                                         "\n Utilice el siguiente formato aaaa-mm-ddThh:mm:ss sin olvidar la T: ");
-                                finAlquiler = LocalDateTime.parse(System.console().readLine());
+                                finAlquiler = LocalDateTime.parse(sc.next());
                                 System.out.print("Ingrese el uso que le dara al vehiculo: ");
-                                usoVehiculo = System.console().readLine();
+                                usoVehiculo = sc.next();
 
                                 alquileres.add(new Alquiler(id, vehiculo, inicioAlquiler, finAlquiler, tipoDocumento,
                                         documento, alquilador, usoVehiculo));
-
-                            } catch (Exception e) {
+                                System.out.print(" \n Alquileres ingresados exitosamente ");
+                            } catch (InputMismatchException e) {
                                 System.out.println(
-                                        "\n Ha ingresado incorrectamente la informacion. Por favor intente nuevamente\n\n");
+                                        "\n No ha ingresado la informacion correctamente. Por favor intente nuevamente\n\n");
                             }
-
-                            System.out.print(" \n Alquileres ingresados exitosamente ");
                         }
-
                     } else {
                         System.out.println("Inserte un numero mayor a 0. Por favor intente nuevamente\n\n");
                     }
@@ -218,8 +219,13 @@ public class Menu {
                 System.out.print("Ingrese el numero de seguros que desea ingresar: ");
 
                 try {
-
-                    nRegistros = sc.nextInt();
+                    String number = sc.next();
+                    while (!validate(number)) {
+                        System.out.println("Por favor ingrese un numero valido");
+                        System.out.print("Ingrese el numero de seguros que desea ingresar: ");
+                        number = sc.next();
+                    }
+                    nRegistros = Integer.parseInt(number);
 
                     if (nRegistros > 0) {
 
@@ -236,7 +242,7 @@ public class Menu {
                             try {
 
                                 System.out.print(" \n Ingrese el identificador del Seguro (numero sin puntos): ");
-                                id = sc.nextInt();
+                                id = Integer.parseInt(sc.next());
                                 System.out
                                         .print("Seleccione el vehiculo que desea asegurar (por medio del simbolo #): ");
                                 for (int j = 0; j < vehiculos.size(); j++) {
@@ -245,35 +251,32 @@ public class Menu {
                                             + "  \n");
                                 }
 
-                                idVehiculo = sc.nextInt();
+                                idVehiculo = Integer.parseInt(sc.next());
                                 vehiculo = vehiculos.get(idVehiculo);
                                 System.out.print("Ingrese el nombre de la empresa aseguradora: ");
-                                empresa = System.console().readLine();
+                                empresa = sc.next();
                                 System.out.print("Ingrese la descripcion del seguro: ");
-                                descripcion = System.console().readLine();
+                                descripcion = sc.next();
                                 System.out.print("Ingrese la fecha del inicio del seguro");
                                 System.out.print(
                                         " \n Utilice el siguiente formato aaaa-mm-dd: ");
-                                inicioSeguro = LocalDate.parse(System.console().readLine());
+                                inicioSeguro = LocalDate.parse(sc.next());
                                 System.out.print("Ingrese la fecha del final del seguro");
                                 System.out.print(
                                         "\n Utilice el siguiente formato aaaa-mm-dd: ");
-                                finSeguro = LocalDate.parse(System.console().readLine());
+                                finSeguro = LocalDate.parse(sc.next());
 
                                 seguros.add(new Seguro(id, vehiculo, inicioSeguro, finSeguro, empresa, descripcion));
+                                System.out.print(" \n Seguros ingresados exitosamente ");
 
-                            } catch (Exception e) {
+                            } catch (InputMismatchException e) {
                                 System.out.println(
-                                        "\n Ha ingresado incorrectamente la informacion. Por favor intente nuevamente\n\n");
+                                        "\n No ha ingresado la informacion correctamente. Por favor intente nuevamente\n\n");
                             }
-
-                            System.out.print(" \n Seguros ingresados exitosamente ");
                         }
-
                     } else {
                         System.out.println("Inserte un numero mayor a 0. Por favor intente nuevamente\n\n");
                     }
-
                 } catch (NumberFormatException ex) {
                     System.out.println("Inserte un numero valido. Por favor intente nuevamente\n\n");
                 }
@@ -296,13 +299,13 @@ public class Menu {
             }
             try {
                 System.out.print(" \n Seleccione por medio del # el vehiculo que desea verificar:  \n");
-                opcionVehiculo = sc.nextInt();
+                opcionVehiculo = Integer.parseInt(sc.next());
+
                 System.out.print("El vehiculo seleccionado se encuentra en estado: "
                         + vehiculos.get(opcionVehiculo).estadoVehiculo() + "\n");
-            } catch (Exception e) {
-                System.out.println("\n Ha ingresado incorrectamente la informacion. Por favor intente nuevamente\n\n");
+            } catch (InputMismatchException e) {
+                System.out.println("\n No ha ingresado la informacion correctamente. Por favor intente nuevamente\n\n");
             }
-
         } else {
             System.out.print(" \n Registre vehiculos para utilizar esta opcion  \n");
         }
@@ -320,13 +323,12 @@ public class Menu {
             }
             try {
                 System.out.print(" \n Seleccione por medio del # el alquiler que desea verificar:  \n");
-                opcion = sc.nextInt();
+                opcion = Integer.parseInt(sc.next());
                 System.out.print("La duracion en horas del alquiler es : "
                         + alquileres.get(opcion).duracionAlquiler() + "\n");
-            } catch (Exception e) {
-                System.out.println("\n Ha ingresado incorrectamente la informacion. Por favor intente nuevamente\n\n");
+            } catch (InputMismatchException e) {
+                System.out.println("\n No ha ingresado la informacion correctamente. Por favor intente nuevamente\n\n");
             }
-
         } else {
             System.out.print(" \n Registre alquileres para utilizar esta opcion  \n");
         }
@@ -344,13 +346,12 @@ public class Menu {
             }
             try {
                 System.out.print(" \n Seleccione por medio del # el seguro que desea verificar:  \n");
-                opcion = sc.nextInt();
+                opcion = Integer.parseInt(sc.next());
                 System.out.print("La duracion en dias del seguro es : "
                         + seguros.get(opcion).cobertura() + "\n");
-            } catch (Exception e) {
-                System.out.println("\n Ha ingresado incorrectamente la informacion. Por favor intente nuevamente\n\n");
+            } catch (InputMismatchException e) {
+                System.out.println("\n No ha ingresado la informacion correctamente. Por favor intente nuevamente\n\n");
             }
-
         } else {
             System.out.print(" \n Registre alquileres para utilizar esta opcion  \n");
         }
