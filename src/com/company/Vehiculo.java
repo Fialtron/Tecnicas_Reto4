@@ -55,9 +55,7 @@ public class Vehiculo {
             estado = "Medianamente usado";
         } else {
             estado = "Usado";
-
         }
-
         return estado;
     }
 
